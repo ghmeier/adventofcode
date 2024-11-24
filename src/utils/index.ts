@@ -18,7 +18,7 @@ export function sum(list: number[]): number {
 }
 
 export function toSingleDigitList(line: string) {
-	return line.split("").map((v) => parseInt(v, 10));
+	return line.split("").map((v) => Number.parseInt(v, 10));
 }
 
 export function splitWhitespace(line: string) {
@@ -27,19 +27,25 @@ export function splitWhitespace(line: string) {
 
 export type Point = [number, number];
 
-export function ps(p: T) {
+export function ps(p: (string | number)[]) {
 	return p.join(",");
 }
 
 export function pFromS(s: string): Point {
-	return s.split(",").map((c) => parseInt(c, 10));
+	return s
+		.split(",")
+		.slice(0, 2)
+		.map((c) => Number.parseInt(c, 10)) as Point;
 }
 
 export function dumpGrid(grid: string[][]) {
 	console.log(grid.map((row) => row.join("")).join("\n"));
 }
 
-export function iterateGrid(grid: T[][], f: (x: number, y: number) => void) {
+export function iterateGrid(
+	grid: string[][],
+	f: (x: number, y: number) => void,
+) {
 	for (let y = 0; y < grid.length; y++) {
 		for (let x = 0; x < grid[y].length; x++) {
 			f(x, y);
@@ -47,7 +53,7 @@ export function iterateGrid(grid: T[][], f: (x: number, y: number) => void) {
 	}
 }
 
-export function validCell(grid: T[][], [x, y]: Point) {
+export function validCell(grid: string[][], [x, y]: Point) {
 	return y >= 0 && y < grid.length && x >= 0 && x < grid[y].length;
 }
 

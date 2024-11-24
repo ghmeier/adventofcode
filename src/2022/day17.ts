@@ -1,6 +1,6 @@
-import { cloneDeep, range } from "lodash";
-import { handleLines, sum, Point, ps, iterateGrid, dumpGrid } from "../utils";
 import { open } from "fs";
+import { cloneDeep, range } from "lodash";
+import { Point, dumpGrid, handleLines, iterateGrid, ps, sum } from "../utils";
 
 const DATA_PATH = `${import.meta.dir}/day17.txt`;
 const CALIBRATE_PATH = `${import.meta.dir}/day17-calibrate.txt`;

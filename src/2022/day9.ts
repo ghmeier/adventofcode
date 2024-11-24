@@ -94,7 +94,7 @@ async function problemOne() {
 	for (const line of lines) {
 		if (!line) continue;
 		const [dir, raw] = line.split(" ");
-		let amount = parseInt(raw, 10);
+		let amount = Number.parseInt(raw, 10);
 		while (amount > 0) {
 			h = movePoint(dir as keyof typeof MOVE, h);
 			t = follow(t, h);
@@ -119,7 +119,7 @@ async function problemTwo() {
 	for (const line of lines) {
 		if (!line) continue;
 		const [dir, raw] = line.split(" ");
-		let amount = parseInt(raw, 10);
+		let amount = Number.parseInt(raw, 10);
 		while (amount > 0) {
 			for (let ix = 0; ix < rope.length; ix++) {
 				if (ix === 0) rope[ix] = movePoint(dir as keyof typeof MOVE, rope[ix]);

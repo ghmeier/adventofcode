@@ -11,12 +11,12 @@ async function problemOne() {
 		.replace("Time:", "")
 		.split(/\s+/)
 		.filter((v) => !!v)
-		.map((v) => parseInt(v, 10));
+		.map((v) => Number.parseInt(v, 10));
 	const distances = lines[1]
 		.replace("Distance:", "")
 		.split(/\s+/)
 		.filter((v) => !!v)
-		.map((v) => parseInt(v, 10));
+		.map((v) => Number.parseInt(v, 10));
 
 	let total = 1;
 	for (let i = 0; i < times.length; i++) {
@@ -44,7 +44,7 @@ function possibleWins(time: number, distance: number) {
 async function problemTwo() {
 	const lines = await readLines(DATA_PATH);
 
-	const time = parseInt(
+	const time = Number.parseInt(
 		lines[0]
 			.replace("Time:", "")
 			.split(/\s+/)
@@ -52,7 +52,7 @@ async function problemTwo() {
 			.join(""),
 		10,
 	);
-	const distance = parseInt(
+	const distance = Number.parseInt(
 		lines[1]
 			.replace("Distance:", "")
 			.split(/\s+/)
@@ -61,8 +61,7 @@ async function problemTwo() {
 		10,
 	);
 
-
-	console.log("Problem two:", possibleWins(time,distance));
+	console.log("Problem two:", possibleWins(time, distance));
 }
 
 await problemOne();

@@ -1,12 +1,12 @@
 import {
-	readLines,
-	Point,
-	ps,
-	pFromS,
-	sum,
+	type Point,
+	dumpGrid,
 	handleLines,
 	iterateGrid,
-	dumpGrid,
+	pFromS,
+	ps,
+	readLines,
+	sum,
 } from "../utils";
 
 const DATA_PATH = `${import.meta.dir}/day11.txt`;

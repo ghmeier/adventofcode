@@ -11,14 +11,14 @@ function parseSeeds(line: string) {
 	return line
 		.replace("seeds: ", "")
 		.split(/\s+/)
-		.map((v) => parseInt(v, 10));
+		.map((v) => Number.parseInt(v, 10));
 }
 
 function parseSeedRange(line: string) {
 	const ranges = line
 		.replace("seeds: ", "")
 		.split(/\s+/)
-		.map((v) => parseInt(v, 10));
+		.map((v) => Number.parseInt(v, 10));
 	const seeds: Range[] = [];
 	for (let ix = 0; ix < ranges.length; ix += 2) {
 		seeds.push([ranges[ix], ranges[ix] + ranges[ix + 1] - 1]);
@@ -43,7 +43,9 @@ function parseMappings<T extends number | Range>(
 			mappings.push([]);
 			continue;
 		}
-		const [dest, src, size] = splitWhitespace(line).map((v) => parseInt(v, 10));
+		const [dest, src, size] = splitWhitespace(line).map((v) =>
+			Number.parseInt(v, 10),
+		);
 
 		mappings[mappings.length - 1].push({
 			src: [src, src + size - 1],
@@ -60,35 +62,32 @@ function parseMappings<T extends number | Range>(
 function translateRange(mappings: SeedMapping[], seedRange: Range) {
 	let translated: Range[] = [[...seedRange]];
 	for (const mapping of mappings) {
-		translated = translated.reduce(
-			(acc, r) => {
-				let start = r[0];
-				let end = r[1];
-				for (const { src, dest } of mapping) {
-					// The start is within the current mapping range
-					const diff = dest[0] - src[0];
-					if (src[0] <= start && start <= src[1]) {
-						const translatedStart = start + diff;
-						// If the end is less than the range end, the entire range is contained and we can return.
-						if (end <= src[1]) {
-							acc.push([translatedStart, end + diff]);
-							return acc;
-						}
-
-						// Otherwise, this is a partial range and we must continue with a new start point after the current range.
-						acc.push([translatedStart, dest[1]]);
-						start = src[1] + 1;
-						// The start is _not_ in the current mapping range but the end is.
-					} else if (src[0] <= end && end <= src[1]) {
-						acc.push([dest[0], src[0] + diff]);
-						end = src[0] - 1;
+		translated = translated.reduce((acc, r) => {
+			let start = r[0];
+			let end = r[1];
+			for (const { src, dest } of mapping) {
+				// The start is within the current mapping range
+				const diff = dest[0] - src[0];
+				if (src[0] <= start && start <= src[1]) {
+					const translatedStart = start + diff;
+					// If the end is less than the range end, the entire range is contained and we can return.
+					if (end <= src[1]) {
+						acc.push([translatedStart, end + diff]);
+						return acc;
 					}
+
+					// Otherwise, this is a partial range and we must continue with a new start point after the current range.
+					acc.push([translatedStart, dest[1]]);
+					start = src[1] + 1;
+					// The start is _not_ in the current mapping range but the end is.
+				} else if (src[0] <= end && end <= src[1]) {
+					acc.push([dest[0], src[0] + diff]);
+					end = src[0] - 1;
 				}
-				acc.push([start, end]);
-				return acc;
-			},
-			[] as Range[],
-		);
+			}
+			acc.push([start, end]);
+			return acc;
+		}, [] as Range[]);
 	}
 	return translated;
 }

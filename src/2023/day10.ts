@@ -1,4 +1,4 @@
-import { readLines, sum, Point, ps, pFromS } from "../utils";
+import { type Point, pFromS, ps, readLines, sum } from "../utils";
 
 const DATA_PATH = `${import.meta.dir}/day10.txt`;
 const CALIBRATE_PATH = `${import.meta.dir}/day10-calibrate.txt`;

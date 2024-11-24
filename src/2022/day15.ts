@@ -1,4 +1,4 @@
-import { handleLines, Point, ps } from "../utils";
+import { type Point, handleLines, ps } from "../utils";
 
 const DATA_PATH = `${import.meta.dir}/day15.txt`;
 const CALIBRATE_PATH = `${import.meta.dir}/day15-calibrate.txt`;
@@ -25,8 +25,8 @@ async function initialize(file: string) {
 				/Sensor at x=(?<sx>-?\d+), y=(?<sy>-?\d+): closest beacon is at x=(?<bx>-?\d+), y=(?<by>-?\d+)/,
 			) as RegExpMatchArray
 		).groups;
-		const p = [sx, sy].map((v) => parseInt(v, 10)) as Point;
-		const b = [bx, by].map((v) => parseInt(v, 10)) as Point;
+		const p = [sx, sy].map((v) => Number.parseInt(v, 10)) as Point;
+		const b = [bx, by].map((v) => Number.parseInt(v, 10)) as Point;
 		const distance = d(p, b);
 		maxX = Math.max(p[0] + distance, b[0] + distance, maxX);
 		maxY = Math.max(p[1] + distance, b[1] + distance, maxY);

@@ -31,7 +31,7 @@ async function problemOne() {
 
 		recursive.push(
 			calculateTrend(
-				splitWhitespace(line).map((v) => parseInt(v, 10)),
+				splitWhitespace(line).map((v) => Number.parseInt(v, 10)),
 				false,
 			),
 		);
@@ -47,7 +47,7 @@ async function problemTwo() {
 		if (!line) continue;
 		recursive.push(
 			calculateTrend(
-				splitWhitespace(line).map((v) => parseInt(v, 10)),
+				splitWhitespace(line).map((v) => Number.parseInt(v, 10)),
 				true,
 			),
 		);

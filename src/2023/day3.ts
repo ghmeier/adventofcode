@@ -45,7 +45,7 @@ function handleNumber(lines: string[], digits: string[], x: number, y: number) {
 	if (!digits.length) return;
 	if (!hasSymbol(lines, x, y, digits.length)) return;
 
-	return parseInt(digits.join(""), 10);
+	return Number.parseInt(digits.join(""), 10);
 }
 
 function handleGearNumber(
@@ -59,7 +59,7 @@ function handleGearNumber(
 	const gearPosition = hasGear(lines, boundaries);
 	if (!gearPosition) return;
 
-	return { ...gearPosition, value: parseInt(digits.join(""), 10) };
+	return { ...gearPosition, value: Number.parseInt(digits.join(""), 10) };
 }
 
 function parseLines(
@@ -82,14 +82,16 @@ function parseLines(
 				xVal -= 1;
 			}
 
-			handler(digits, xVal, parseInt(y));
+			handler(digits, xVal, Number.parseInt(y));
 			digits = [];
 		}
 	}
 }
 
 async function problemOne() {
-	const lines = (await readLines(`${import.meta.dir}/day3.txt`)).filter((l) => !!l);
+	const lines = (await readLines(`${import.meta.dir}/day3.txt`)).filter(
+		(l) => !!l,
+	);
 
 	const found: number[] = [];
 	parseLines(lines, (digits, x, y) => {
@@ -101,7 +103,9 @@ async function problemOne() {
 }
 
 async function problemTwo() {
-	const lines = (await readLines(`${import.meta.dir}/day3.txt`)).filter((l) => !!l);
+	const lines = (await readLines(`${import.meta.dir}/day3.txt`)).filter(
+		(l) => !!l,
+	);
 	const potentialGears: Record<string, number[]> = {};
 
 	parseLines(lines, (digits, x, y) => {

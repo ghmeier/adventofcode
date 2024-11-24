@@ -92,8 +92,8 @@ function sortHands(hands: Hand[]) {
 		}
 		for (let i = 0; i < a.cards.length; i++) {
 			if (a.cards[i] === b.cards[i]) continue;
-			const aVal = VALUES[a.cards[i]] || parseInt(a.cards[i]);
-			const bVal = VALUES[b.cards[i]] || parseInt(b.cards[i]);
+			const aVal = VALUES[a.cards[i]] || Number.parseInt(a.cards[i]);
+			const bVal = VALUES[b.cards[i]] || Number.parseInt(b.cards[i]);
 			return aVal - bVal;
 		}
 	});
@@ -107,7 +107,7 @@ async function problemOne() {
 	for (const line of lines) {
 		if (!line) continue;
 		const [c, b] = line.split(/\s+/);
-		const h: Hand = { bid: parseInt(b, 10), cards: c, match: null };
+		const h: Hand = { bid: Number.parseInt(b, 10), cards: c, match: null };
 		h.match = resolveMatch(h);
 		hands.push(h);
 	}
@@ -123,7 +123,7 @@ async function problemTwo() {
 	for (const line of lines) {
 		if (!line) continue;
 		const [c, b] = line.split(/\s+/);
-		const h: Hand = { bid: parseInt(b, 10), cards: c, match: null };
+		const h: Hand = { bid: Number.parseInt(b, 10), cards: c, match: null };
 		h.match = resolveMatchWild(h);
 		hands.push(h);
 	}

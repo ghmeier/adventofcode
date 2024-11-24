@@ -40,7 +40,7 @@ function parseListLine(line: string, dir: Directory) {
 	if (parts[0] === "dir") {
 		dir.directories[parts[1]] = { name: parts[1], files: [], directories: {} };
 	} else {
-		dir.files.push({ name: parts[1], size: parseInt(parts[0], 10) });
+		dir.files.push({ name: parts[1], size: Number.parseInt(parts[0], 10) });
 	}
 }
 

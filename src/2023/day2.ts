@@ -12,11 +12,11 @@ function parseGame(line: string): Game {
 	const tries = details.split(";").map((t) => {
 		return t.split(",").map((t) => {
 			const [value, color] = t.trim().split(" ");
-			return [color as Color, parseInt(value, 10)] as [Color, number];
+			return [color as Color, Number.parseInt(value, 10)] as [Color, number];
 		});
 	});
 
-	return { id: parseInt(name.replace("Game ", ""), 10), tries };
+	return { id: Number.parseInt(name.replace("Game ", ""), 10), tries };
 }
 
 async function parseGames(): Promise<Game[]> {

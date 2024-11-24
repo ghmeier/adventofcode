@@ -1,12 +1,12 @@
+import { cloneDeep, map, minBy } from "lodash";
 import {
-	Point,
+	type Point,
 	dumpGrid,
 	handleLines,
 	ps,
 	toSingleDigitList,
 	validCell,
 } from "../utils";
-import { cloneDeep, map, minBy } from "lodash";
 import MinHeap from "../utils/MinHeap";
 
 const DATA_PATH = `${import.meta.dir}/day17.txt`;
@@ -43,7 +43,7 @@ function dumpPath(
 	}
 	const g = cloneDeep(grid);
 	for (const p of path) {
-		const [x, y] = p.split(",").map((x) => parseInt(x, 10));
+		const [x, y] = p.split(",").map((x) => Number.parseInt(x, 10));
 		g[y][x] = "*";
 	}
 	dumpGrid(g);

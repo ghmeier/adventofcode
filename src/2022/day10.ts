@@ -20,7 +20,7 @@ function parseCycles(lines: string[]) {
 		if (cmd[0] === "noop") cycles.push(x);
 		else {
 			cycles.push(x, x);
-			x += parseInt(cmd[1], 10);
+			x += Number.parseInt(cmd[1], 10);
 		}
 	}
 	cycles.push(x);

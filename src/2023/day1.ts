@@ -10,7 +10,10 @@ async function problemOne() {
 			.join("");
 		if (!digits?.length) continue;
 
-		const value = parseInt(`${digits[0]}${digits[digits.length - 1]}`, 10);
+		const value = Number.parseInt(
+			`${digits[0]}${digits[digits.length - 1]}`,
+			10,
+		);
 		total += value;
 	}
 
@@ -51,7 +54,7 @@ async function problemTwo() {
 			parseDigit([...last].reverse().join("")),
 		];
 
-		const value = parseInt(digits.join(""), 10);
+		const value = Number.parseInt(digits.join(""), 10);
 		sum += value;
 	}
 	console.log(sum);

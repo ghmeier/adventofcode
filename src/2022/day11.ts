@@ -15,8 +15,8 @@ function getOperation({
 	modifier,
 }: { left: string; right: string; modifier: string }) {
 	return (v: number) => {
-		const leftVal = left === "old" ? v : parseInt(left, 10);
-		const rightVal = right === "old" ? v : parseInt(right, 10);
+		const leftVal = left === "old" ? v : Number.parseInt(left, 10);
+		const rightVal = right === "old" ? v : Number.parseInt(right, 10);
 
 		if (modifier === "+") return leftVal + rightVal;
 		if (modifier === "-") return leftVal - rightVal;
@@ -76,7 +76,7 @@ function getParser(monkeys: Monkey[], divisors: number[]) {
 			current.items = cleaned
 				.replace(START, "")
 				.split(", ")
-				.map((v) => parseInt(v, 10));
+				.map((v) => Number.parseInt(v, 10));
 			return;
 		}
 		if (cleaned.startsWith(OPERATION)) {
@@ -85,15 +85,15 @@ function getParser(monkeys: Monkey[], divisors: number[]) {
 			return;
 		}
 		if (cleaned.startsWith(TEST)) {
-			const divisor = parseInt(cleaned.replace(TEST, ""), 10);
+			const divisor = Number.parseInt(cleaned.replace(TEST, ""), 10);
 			divisors.push(divisor);
 			current.test = (v: number) => v % divisor === 0;
 		}
 		if (cleaned.startsWith(FAIL)) {
-			current.fail = () => parseInt(cleaned.replace(FAIL, ""), 10);
+			current.fail = () => Number.parseInt(cleaned.replace(FAIL, ""), 10);
 		}
 		if (cleaned.startsWith(PASS)) {
-			current.pass = () => parseInt(cleaned.replace(PASS, ""), 10);
+			current.pass = () => Number.parseInt(cleaned.replace(PASS, ""), 10);
 		}
 	};
 }

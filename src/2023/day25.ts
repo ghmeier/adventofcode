@@ -1,6 +1,6 @@
+import { mincut } from "@graph-algorithm/minimum-cut";
 import { cloneDeep } from "lodash";
 import { handleLines } from "../utils";
-import { mincut } from "@graph-algorithm/minimum-cut";
 
 const DATA_PATH = `${import.meta.dir}/day25.txt`;
 const CALIBRATE_PATH = `${import.meta.dir}/day25-calibrate.txt`;
@@ -35,8 +35,8 @@ async function problemOne() {
 		}
 	});
 	const nodes = Object.keys(graph);
-    console.log(connections)
-    console.log(mincut(connections))
+	console.log(connections);
+	console.log(mincut(connections));
 	for (let i = 0; i < connections.length; i++) {
 		for (let j = i + 1; j < connections.length; j++) {
 			for (let p = j + 1; p < connections.length; p++) {

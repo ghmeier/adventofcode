@@ -4,7 +4,9 @@ const DATA_PATH = `${import.meta.dir}/day4.txt`;
 const CALIBRATE_PATH = `${import.meta.dir}/day4-calibrate.txt`;
 
 function parseLine(line: string) {
-	return line.split(",").map((a) => a.split("-").map((a) => parseInt(a, 10)));
+	return line
+		.split(",")
+		.map((a) => a.split("-").map((a) => Number.parseInt(a, 10)));
 }
 
 function isContained(first: number[], second: number[]) {

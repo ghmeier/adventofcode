@@ -44,7 +44,7 @@ async function problemTwo() {
 		const entries = line.split(",");
 		for (const entry of entries) {
 			const [label, f] = entry.split(/[=-]/);
-			const focal = parseInt(f, 10);
+			const focal = Number.parseInt(f, 10);
 			const ix = hash(label);
 			if (!focal) {
 				boxes[ix] = boxes[ix].filter((l) => l.label !== label);

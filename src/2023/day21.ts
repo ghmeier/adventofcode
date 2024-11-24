@@ -1,7 +1,8 @@
+import { cond, flatten, range } from "lodash";
 import {
 	DIRECTIONS,
 	DIRS,
-	Point,
+	type Point,
 	dumpGrid,
 	handleLines,
 	pFromS,
@@ -10,7 +11,6 @@ import {
 	sum,
 	validCell,
 } from "../utils";
-import { cond, flatten, range } from "lodash";
 import MinHeap from "../utils/MinHeap";
 import { calculateTrend } from "./day9";
 const DATA_PATH = `${import.meta.dir}/day21.txt`;

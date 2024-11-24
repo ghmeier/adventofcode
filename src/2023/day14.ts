@@ -1,5 +1,5 @@
 import { cloneDeep } from "lodash";
-import { Point, handleLines, iterateGrid } from "../utils";
+import { type Point, handleLines, iterateGrid } from "../utils";
 
 const DATA_PATH = `${import.meta.dir}/day14.txt`;
 const CALIBRATE_PATH = `${import.meta.dir}/day14-calibrate.txt`;

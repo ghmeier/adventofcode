@@ -1,5 +1,5 @@
 import { isEqual, range } from "lodash";
-import { handleLines, sum, Point, ps, iterateGrid } from "../utils";
+import { type Point, handleLines, iterateGrid, ps, sum } from "../utils";
 
 const DATA_PATH = `${import.meta.dir}/day16.txt`;
 const CALIBRATE_PATH = `${import.meta.dir}/day16-calibrate.txt`;

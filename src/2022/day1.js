@@ -11,7 +11,7 @@ async function problemOne() {
 			currentTotal = 0;
 			continue;
 		}
-		currentTotal += parseInt(line, 10);
+		currentTotal += Number.parseInt(line, 10);
 	}
 
 	console.log(Math.max(...calorieTotals));
@@ -28,7 +28,7 @@ async function problemTwo() {
 			currentTotal = 0;
 			continue;
 		}
-		currentTotal += parseInt(line, 10);
+		currentTotal += Number.parseInt(line, 10);
 	}
 
 	const topThree = calorieTotals.sort((a, b) => a - b).slice(-3);

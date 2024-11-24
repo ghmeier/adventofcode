@@ -107,7 +107,7 @@ async function problemOne() {
 }
 
 async function problemTwo() {
-	let starts: Point[] = [];
+	const starts: Point[] = [];
 	let end: Point = [-1, -1];
 	const grid: number[][] = [];
 	await handleLines(DATA_PATH, (line: string) => {

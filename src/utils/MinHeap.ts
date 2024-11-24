@@ -1,4 +1,3 @@
-
 class MinHeap<T> {
 	heap: string[];
 	values: Record<string, T>;

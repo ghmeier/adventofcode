@@ -1,5 +1,5 @@
 import { flatten, max } from "lodash";
-import { readLines, toSingleDigitList, sum } from "../utils";
+import { readLines, sum, toSingleDigitList } from "../utils";
 
 const DATA_PATH = `${import.meta.dir}/day8.txt`;
 const CALIBRATE_PATH = `${import.meta.dir}/day8-calibrate.txt`;

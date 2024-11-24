@@ -27,9 +27,9 @@ function parseAction(line: string): Action {
 	);
 	const { amount, src, dest } = match?.groups || {};
 	return {
-		amount: parseInt(amount, 10),
-		src: parseInt(src, 10) - 1,
-		dest: parseInt(dest, 10) - 1,
+		amount: Number.parseInt(amount, 10),
+		src: Number.parseInt(src, 10) - 1,
+		dest: Number.parseInt(dest, 10) - 1,
 	};
 }
 

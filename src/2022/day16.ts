@@ -1,6 +1,6 @@
+import { open } from "node:fs";
 import { maxBy } from "lodash";
-import { handleLines, sum, Point, ps, iterateGrid, dumpGrid } from "../utils";
-import { open } from "fs";
+import { Point, dumpGrid, handleLines, iterateGrid, ps, sum } from "../utils";
 
 const DATA_PATH = `${import.meta.dir}/day16.txt`;
 const CALIBRATE_PATH = `${import.meta.dir}/day16-calibrate.txt`;
@@ -292,7 +292,10 @@ async function problemOne() {
 				/Valve (?<valve>\w+) has flow rate=(?<rate>\d+); tunnel[s]? lead[s]? to valve[s]? (?<paths>[\w+,\s]+)/,
 			) as RegExpMatchArray
 		).groups as { valve: string; rate: string; paths: string };
-		valves[valve] = { rate: parseInt(rate, 10), paths: paths.split(", ") };
+		valves[valve] = {
+			rate: Number.parseInt(rate, 10),
+			paths: paths.split(", "),
+		};
 	});
 	const opened = Object.keys(valves).reduce(
 		(acc, v) => {
@@ -317,7 +320,10 @@ async function problemTwo() {
 				/Valve (?<valve>\w+) has flow rate=(?<rate>\d+); tunnel[s]? lead[s]? to valve[s]? (?<paths>[\w+,\s]+)/,
 			) as RegExpMatchArray
 		).groups as { valve: string; rate: string; paths: string };
-		valves[valve] = { rate: parseInt(rate, 10), paths: paths.split(", ") };
+		valves[valve] = {
+			rate: Number.parseInt(rate, 10),
+			paths: paths.split(", "),
+		};
 	});
 	const opened = Object.keys(valves).reduce(
 		(acc, v) => {

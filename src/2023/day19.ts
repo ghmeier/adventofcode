@@ -1,6 +1,6 @@
-import { Point, readLines, sum } from "../utils";
-import ShoelaceArea from "../utils/ShoelaceArea";
 import { cond, flatten } from "lodash";
+import { type Point, readLines, sum } from "../utils";
+import ShoelaceArea from "../utils/ShoelaceArea";
 const DATA_PATH = `${import.meta.dir}/day19.txt`;
 const CALIBRATE_PATH = `${import.meta.dir}/day19-calibrate.txt`;
 
@@ -23,10 +23,10 @@ function toCondition(
 			return t;
 		}
 		if (c === ">") {
-			if (p[t] > parseInt(v, 10)) return d;
+			if (p[t] > Number.parseInt(v, 10)) return d;
 			return null;
 		}
-		if (p[t] < parseInt(v, 10)) return d;
+		if (p[t] < Number.parseInt(v, 10)) return d;
 		return null;
 	};
 }
@@ -59,7 +59,7 @@ function parse(lines: string[]) {
 				.reduce(
 					(acc, raw) => {
 						const [k, v] = raw.split("=");
-						acc[k] = parseInt(v, 10);
+						acc[k] = Number.parseInt(v, 10);
 						return acc;
 					},
 					{} as Record<string, number>,
@@ -99,7 +99,7 @@ function partition(lines: string[]) {
 				return {
 					key: t,
 					condition: c,
-					partition: parseInt(v, 10),
+					partition: Number.parseInt(v, 10),
 					next: d || t,
 				};
 			});

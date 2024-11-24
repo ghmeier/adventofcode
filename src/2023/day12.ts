@@ -1,5 +1,5 @@
 import { memoize } from "lodash";
-import { sum, handleLines } from "../utils";
+import { handleLines, sum } from "../utils";
 
 const DATA_PATH = `${import.meta.dir}/day12.txt`;
 const CALIBRATE_PATH = `${import.meta.dir}/day12-calibrate.txt`;
@@ -9,7 +9,7 @@ async function problemOne() {
 	const options: number[] = [];
 	await handleLines(DATA_PATH, (line) => {
 		const [row, g] = line.split(" ");
-		const groups = g.split(",").map((v) => parseInt(v, 10));
+		const groups = g.split(",").map((v) => Number.parseInt(v, 10));
 
 		options.push(memoizedCountCombos(row, groups));
 	});
@@ -18,7 +18,7 @@ async function problemOne() {
 }
 
 function expandGroups(g: string) {
-	const groups = g.split(",").map((v) => parseInt(v, 10));
+	const groups = g.split(",").map((v) => Number.parseInt(v, 10));
 
 	return [].concat(...Array(5).fill(groups));
 }

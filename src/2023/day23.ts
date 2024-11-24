@@ -1,17 +1,17 @@
 import { cloneDeep, maxBy, noConflict } from "lodash";
+import { cos } from "mathjs";
 import {
-	DIRS,
 	DIRECTIONS,
+	DIRS,
+	type Point,
+	dumpGrid,
 	handleLines,
+	pFromS,
 	ps,
 	readLines,
-	dumpGrid,
-	Point,
 	validCell,
-	pFromS,
 } from "../utils";
 import MinHeap from "../utils/MinHeap";
-import { cos } from "mathjs";
 
 const DATA_PATH = `${import.meta.dir}/day23.txt`;
 const CALIBRATE_PATH = `${import.meta.dir}/day23-calibrate.txt`;

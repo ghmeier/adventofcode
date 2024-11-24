@@ -1,6 +1,6 @@
+import { isEqual } from "lodash";
 import { sort } from "mathjs";
 import { handleLines, readLines, sum } from "../utils";
-import { isEqual } from "lodash";
 
 const DATA_PATH = `${import.meta.dir}/day13.txt`;
 const CALIBRATE_PATH = `${import.meta.dir}/day13-calibrate.txt`;
@@ -14,7 +14,7 @@ function parseList(line: string) {
 	const values = [];
 	while (parts.length) {
 		if (parts[0].match(/^\d+$/)) {
-			values.push(parseInt(parts.shift() as string, 10));
+			values.push(Number.parseInt(parts.shift() as string, 10));
 		} else if (parts[0].match(/^\[\d*\]$/)) {
 			values.push(parseList(parts.shift() as string));
 		} else if (parts[0].startsWith("[")) {

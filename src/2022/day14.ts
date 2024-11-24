@@ -53,7 +53,7 @@ async function problemOne() {
 	let maxY = 0;
 	await handleLines(DATA_PATH, (line) => {
 		const shape = line.split(" -> ").map((p) => {
-			const pair = p.split(",").map((c) => parseInt(c, 10));
+			const pair = p.split(",").map((c) => Number.parseInt(c, 10));
 			if (pair[1] > maxY) maxY = pair[1];
 			return pair;
 		});
@@ -91,7 +91,7 @@ async function problemTwo() {
 	let maxY = 0;
 	await handleLines(DATA_PATH, (line) => {
 		const shape = line.split(" -> ").map((p) => {
-			const pair = p.split(",").map((c) => parseInt(c, 10));
+			const pair = p.split(",").map((c) => Number.parseInt(c, 10));
 			if (pair[1] > maxY) maxY = pair[1];
 			return pair;
 		});

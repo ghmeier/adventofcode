@@ -1,4 +1,4 @@
-import { Point } from ".";
+import type { Point } from ".";
 
 class ShoelaceArea {
 	sum: Point;

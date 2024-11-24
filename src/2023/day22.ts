@@ -1,6 +1,6 @@
-import { range } from "lodash";
-import { Point, dumpGrid, handleLines, sum } from "../utils";
 import intersects from "intersects";
+import { range } from "lodash";
+import { type Point, dumpGrid, handleLines, sum } from "../utils";
 const DATA_PATH = `${import.meta.dir}/day22.txt`;
 const CALIBRATE_PATH = `${import.meta.dir}/day22-calibrate.txt`;
 
@@ -82,7 +82,7 @@ async function problems() {
 	await handleLines(DATA_PATH, (line) => {
 		const [start, end]: Point3[] = line
 			.split("~")
-			.map((v) => v.split(",").map((i) => parseInt(i, 10)) as Point3);
+			.map((v) => v.split(",").map((i) => Number.parseInt(i, 10)) as Point3);
 		const z = Math.min(start[2], end[2]);
 		const ix = bricks.length.toString().padStart(4, " "); // String.fromCharCode(bricks.length);
 		bricks.push({

@@ -1,7 +1,7 @@
-import { range } from "lodash";
-import { Point, dumpGrid, handleLines, ps, sum } from "../utils";
 import intersects from "intersects";
+import { range } from "lodash";
 import { intersect } from "mathjs";
+import { Point, dumpGrid, handleLines, ps, sum } from "../utils";
 const DATA_PATH = `${import.meta.dir}/day24.txt`;
 const CALIBRATE_PATH = `${import.meta.dir}/day24-calibrate.txt`;
 
@@ -10,8 +10,8 @@ async function problemOne() {
 	const stones: { p: number[]; m: number; b: number }[] = [];
 	await handleLines(DATA_PATH, (line) => {
 		const [pos, mag] = line.split(" @ ");
-		const [x, y] = pos.split(", ").map((v) => parseInt(v, 10));
-		const [mx, my] = mag.split(", ").map((v) => parseInt(v, 10));
+		const [x, y] = pos.split(", ").map((v) => Number.parseInt(v, 10));
+		const [mx, my] = mag.split(", ").map((v) => Number.parseInt(v, 10));
 		const [x2, y2] = [x + mx, y + my];
 		const m = (y2 - y) / (x2 - x);
 

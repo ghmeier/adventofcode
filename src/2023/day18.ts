@@ -1,4 +1,4 @@
-import { Point, handleLines } from "../utils";
+import { type Point, handleLines } from "../utils";
 import ShoelaceArea from "../utils/ShoelaceArea";
 
 const DATA_PATH = `${import.meta.dir}/day18.txt`;
@@ -21,7 +21,7 @@ async function problemOne() {
 
 	await handleLines(DATA_PATH, (line) => {
 		const [d, s] = line.split(" ");
-		actions.push([d, parseInt(s, 10)]);
+		actions.push([d, Number.parseInt(s, 10)]);
 	});
 
 	let edge = 0;
@@ -44,8 +44,11 @@ async function problemTwo() {
 	await handleLines(DATA_PATH, (line) => {
 		const [d, s, color] = line.split(" ");
 		const trimmed = color.replace(/[\(\)#]/g, "");
-		const dir = parseInt(trimmed.substring(trimmed.length - 1), 16);
-		const amount = parseInt(trimmed.substring(0, trimmed.length - 1), 16);
+		const dir = Number.parseInt(trimmed.substring(trimmed.length - 1), 16);
+		const amount = Number.parseInt(
+			trimmed.substring(0, trimmed.length - 1),
+			16,
+		);
 
 		actions.push([DIRS[dir], amount]);
 	});

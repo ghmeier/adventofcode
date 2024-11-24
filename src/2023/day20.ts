@@ -1,5 +1,5 @@
-import { Point, handleLines, readLines, sum } from "../utils";
 import { cond, flatten } from "lodash";
+import { Point, handleLines, readLines, sum } from "../utils";
 const DATA_PATH = `${import.meta.dir}/day20.txt`;
 const CALIBRATE_PATH = `${import.meta.dir}/day20-calibrate.txt`;
 import { lcm } from "mathjs";
