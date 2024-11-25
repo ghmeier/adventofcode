@@ -16,10 +16,7 @@ interface Valve {
 	paths: string[];
 }
 
-const releaseByValveRemaining: Record<
-	string,
-	{ value: number; path: string[] }
-> = {};
+const releaseByValveRemaining: Record<string, number> = {};
 
 function key({ valves, remaining, opened }: Path) {
 	return `${valves.sort().join(",")},${remaining},${Object.keys(opened).join(
@@ -306,7 +303,7 @@ async function problemOne() {
 		{} as Record<string, number>,
 	);
 	const max = traverse(
-		{ valves: ["AA"], remaining: 30, opened: opened },
+		{ valves: ["AA"], remaining: 30, opened: opened, release: [] },
 		valves,
 	);
 	console.log("Problem one:", max);
@@ -342,5 +339,5 @@ async function problemTwo() {
 	console.log("Problem two:", max);
 }
 
-// await problemOne();
-await problemTwo();
+await problemOne();
+// await problemTwo();
