@@ -22,7 +22,7 @@ async function problemOne() {
         })
         fish = next
     }
-    console.log('Problem one:', fish.length, fish)
+    console.log('Problem one:', fish.length)
 }
 
 async function problemTwo() {
@@ -49,7 +49,7 @@ async function problemTwo() {
     }
 
 
-    console.log('Problem two:', sum(Object.values(fish)), fish)
+    console.log('Problem two:', sum(Object.values(fish)))
 }
 
 
