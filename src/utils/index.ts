@@ -42,10 +42,7 @@ export function dumpGrid(grid: string[][]) {
 	console.log(grid.map((row) => row.join("")).join("\n"));
 }
 
-export function iterateGrid(
-	grid: string[][],
-	f: (x: number, y: number) => void,
-) {
+export function iterateGrid<T>(grid: T[][], f: (x: number, y: number) => void) {
 	for (let y = 0; y < grid.length; y++) {
 		for (let x = 0; x < grid[y].length; x++) {
 			f(x, y);
@@ -53,8 +50,33 @@ export function iterateGrid(
 	}
 }
 
-export function validCell(grid: string[][], [x, y]: Point) {
+export function validCell<T>(grid: T[][], [x, y]: Point) {
 	return y >= 0 && y < grid.length && x >= 0 && x < grid[y].length;
+}
+
+export function onSurroundingCell<T>(
+	grid: T[][],
+	[x, y]: Point,
+	f: (next: Point) => void,
+) {
+	for (const d of DIRS) {
+		const next: Point = [x + DIRECTIONS[d][0], y + DIRECTIONS[d][1]];
+		if (validCell(grid, next)) f(next);
+	}
+}
+
+export function onSurroundingCellDiagonal<T>(
+	grid: T[][],
+	[x, y]: Point,
+	f: (next: Point) => void,
+) {
+	for (const d of DIRS_DIAGONAL) {
+		const next: Point = [
+			x + DIRECTIONS_DIAGONAL[d][0],
+			y + DIRECTIONS_DIAGONAL[d][1],
+		];
+		if (validCell(grid, next)) f(next);
+	}
 }
 
 export const DIRECTIONS: Record<string, Point> = {
@@ -64,4 +86,16 @@ export const DIRECTIONS: Record<string, Point> = {
 	WEST: [-1, 0],
 } as const;
 
+export const DIRECTIONS_DIAGONAL: Record<string, Point> = {
+	NORTH: [0, -1],
+	SOUTH: [0, 1],
+	EAST: [1, 0],
+	WEST: [-1, 0],
+	NORTH_EAST: [1, -1],
+	NORTH_WEST: [-1, -1],
+	SOUTH_EASH: [1, 1],
+	SOUTH_WEST: [-1, 1],
+} as const;
+
 export const DIRS = Object.keys(DIRECTIONS);
+export const DIRS_DIAGONAL = Object.keys(DIRECTIONS_DIAGONAL);
