@@ -94,8 +94,8 @@ function countPacket(packet: OperatorPacket | LiteralPacket): number {
 	const values = packet.subpackets.map(countPacket);
 	if (packet.typeId === 0) return sum(values);
 	if (packet.typeId === 1) return values.reduce((acc, v) => acc * v, 1);
-	if (packet.typeId === 2) return minBy(values);
-	if (packet.typeId === 3) return maxBy(values);
+	if (packet.typeId === 2) return minBy(values) || 0;
+	if (packet.typeId === 3) return maxBy(values) || 0;
 	if (packet.typeId === 5) {
 		return values[0] > values[1] ? 1 : 0;
 	}

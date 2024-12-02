@@ -35,6 +35,18 @@ function verify(report: number[], tolerate = false) {
 	}
 }
 
+function isSafe(report: number[]) {
+	const isDecreasing = report[1] - report[0] < 0;
+	for (let i = 1; i < report.length; i++) {
+		const diff = report[i] - report[i - 1];
+		if (isDecreasing && diff > 0) return false;
+		if (!isDecreasing && diff < 0) return false;
+		const m = Math.abs(diff);
+		if (m < 1 || m > 3) return false;
+	}
+	return true;
+}
+
 async function problemOne() {
 	const reports: number[][] = [];
 	await handleLines(DATA_PATH, (l) => {
@@ -59,10 +71,12 @@ async function problemTwo() {
 
 	let safe = 0;
 	for (const report of reports) {
-		try {
-			verify(report, true);
-			safe += 1;
-		} catch {}
+		for (let i = 0; i < report.length; i++) {
+			if (isSafe(report.filter((_, ix) => ix !== i))) {
+				safe++;
+				break;
+			}
+		}
 	}
 
 	console.log("Problem two:", safe);
