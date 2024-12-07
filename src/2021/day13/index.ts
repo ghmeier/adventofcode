@@ -77,15 +77,15 @@ async function problemOne() {
 }
 
 async function problemTwo() {
-    let { grid, folds } = await parse(DATA_PATH);
-    dumpGrid(grid);
+	let { grid, folds } = await parse(DATA_PATH);
+	dumpGrid(grid);
 
-    for (const [axis, line] of folds) {
-        console.log(`Fold ${axis}=${line}`);
-        if (axis === "y") grid = foldY(grid, line);
-        if (axis === "x") grid = foldX(grid, line);
-        dumpGrid(grid);
-    }
+	for (const [axis, line] of folds) {
+		console.log(`Fold ${axis}=${line}`);
+		if (axis === "y") grid = foldY(grid, line);
+		if (axis === "x") grid = foldX(grid, line);
+		dumpGrid(grid);
+	}
 
 	console.log("Problem two:", null);
 }

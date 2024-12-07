@@ -61,7 +61,6 @@ async function problemTwo() {
 		grid.push(row);
 	});
 
-
 	const costs: number[][] = [];
 	const expanded: number[][] = [];
 	for (let y = 0; y < grid.length * 5; y++) {
@@ -73,10 +72,9 @@ async function problemTwo() {
 			else if (y - grid.length >= 0) risk = expanded[y - grid.length][x] + 1;
 			if (risk >= 10) risk = 1;
 			row.push(risk);
-
 		}
 		expanded.push(row);
-		costs.push(row.map(() => Number.MAX_SAFE_INTEGER))
+		costs.push(row.map(() => Number.MAX_SAFE_INTEGER));
 	}
 
 	costs[0][0] = 0;
@@ -102,7 +100,10 @@ async function problemTwo() {
 		}
 	}
 
-	console.log("Problem two:",  costs[expanded.length - 1][expanded[0].length - 1]);
+	console.log(
+		"Problem two:",
+		costs[expanded.length - 1][expanded[0].length - 1],
+	);
 }
 
 await problemOne();

@@ -100,7 +100,11 @@ export const DIRECTIONS_DIAGONAL: Record<string, Point> = {
 export const DIRS = Object.keys(DIRECTIONS);
 export const DIRS_DIAGONAL = Object.keys(DIRECTIONS_DIAGONAL);
 
-export function addCounter<T extends string | number | symbol>(map: Record<T, number>, k: T, v = 1) {
-	if (!map[k]) map[k] = 0
-	map[k] += v
+export function addCounter<T extends string | number | symbol>(
+	map: Record<T, number>,
+	k: T,
+	v = 1,
+) {
+	if (!map[k]) map[k] = 0;
+	map[k] += v;
 }

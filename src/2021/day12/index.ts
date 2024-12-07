@@ -51,7 +51,8 @@ function visitDouble(
 	const next = [...path, c];
 	if (c === "end") return [next];
 	if (c === "start" && path.length) return [];
-    const hasVisited = !graph[c].unlimited && path.filter((p) => p === c).length >= 1;
+	const hasVisited =
+		!graph[c].unlimited && path.filter((p) => p === c).length >= 1;
 	if (hasVisited && double) return [];
 	const nextDouble = double || (hasVisited && c) || null;
 	const paths: string[][] = [];

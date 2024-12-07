@@ -3,7 +3,7 @@ import { sort } from "mathjs";
 import { handleLines, readLines, sum } from "../utils";
 
 const DATA_PATH = `${import.meta.dir}/day13.txt`;
-const CALIBRATE_PATH = `${import.meta.dir}/day13-calibrate.txt`;
+const _CALIBRATE_PATH = `${import.meta.dir}/day13-calibrate.txt`;
 
 function parseList(line: string) {
 	const parts = line
