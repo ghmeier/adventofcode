@@ -108,3 +108,11 @@ export function addCounter<T extends string | number | symbol>(
 	if (!map[k]) map[k] = 0;
 	map[k] += v;
 }
+
+export function pairwiseIterate<T>(list: T[], fn: (a: T, b: T) => void) {
+	for (let i = 0; i < list.length - 1; i++) {
+		for (let j = i + 1; j < list.length; j++) {
+			fn(list[i], list[j])
+		}
+	}
+}

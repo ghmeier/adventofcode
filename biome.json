@@ -7,7 +7,12 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true,
-			"correctness": {"noUnusedVariables": "warn" }
+			"correctness": {
+				"noUnusedVariables": "warn"
+			},
+			"complexity": {
+				"noForEach": "off"
+			}
 		}
 	}
 }
