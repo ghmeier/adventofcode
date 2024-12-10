@@ -1,3 +1,5 @@
+import { cloneDeep } from "lodash";
+
 class MinHeap<T> {
 	heap: string[];
 	values: Record<string, T>;
@@ -48,6 +50,14 @@ class MinHeap<T> {
 			this.heap.push(k);
 			this._percolate(this.heap.length - 1);
 		}
+	}
+
+	copy() {
+		const c = new MinHeap<T>()
+		c.heap = cloneDeep(this.heap)
+		c.values = cloneDeep(this.values)
+		c.priorities = cloneDeep(this.priorities)
+		return c
 	}
 
 	_parent(ix: number) {
@@ -110,8 +120,7 @@ class MinHeap<T> {
 			(r >= this.heap.length || this._priority(ix) <= this._priority(r));
 		if (!levelValid)
 			throw Error(
-				`Invariant violated: p: (${this.heap[ix]}/${this._priority(ix)}), l: (${
-					this.heap[l]
+				`Invariant violated: p: (${this.heap[ix]}/${this._priority(ix)}), l: (${this.heap[l]
 				}/${this._priority(l)}), r: (${this.heap[r]}/${this._priority(r)})`,
 			);
 		if (l < this.heap.length) this.validate(l);
