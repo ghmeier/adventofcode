@@ -66,7 +66,7 @@ async function problemOne() {
 		}
 		// break;
 	}
-	const sumSecond = sum(solvable)
+	const sumSecond = sum(solvable);
 
 	console.log("Problem two:", sumSecond + sumFirst);
 }

@@ -15,27 +15,34 @@ const CALIBRATE_PATH = `${import.meta.dir}/calibrate.txt`;
 
 const D = Object.values(DIRECTIONS);
 
-function score(grid: number[][], [x, y]: Point, m: Record<string, number>, distinct: boolean): number {
+function score(
+	grid: number[][],
+	[x, y]: Point,
+	m: Record<string, number>,
+	distinct: boolean,
+): number {
 	const height = grid[y][x];
-	const key = ps([x, y])
+	const key = ps([x, y]);
 	if (m[key] !== undefined) return distinct ? 0 : m[key];
 	if (height === 9) {
 		m[key] = 1;
-		return 1
+		return 1;
 	}
 	const next = D.map((d) => {
-		const n: Point = [x + d[0], y + d[1]]
+		const n: Point = [x + d[0], y + d[1]];
 		if (!validCell(grid, n) || grid[n[1]][n[0]] - 1 !== height) return null;
-		return n
+		return n;
 	}).filter((n) => !!n);
 	if (!next.length) {
 		m[key] = 0;
 		return 0;
 	}
 
-	return sum(next.map((p) => {
-		return score(grid, p, m, distinct)
-	}))
+	return sum(
+		next.map((p) => {
+			return score(grid, p, m, distinct);
+		}),
+	);
 }
 
 async function problems() {
@@ -51,11 +58,10 @@ async function problems() {
 		grid.push(row);
 	});
 
-	const scores = heads.map((p) => score(grid, p, {}, true))
+	const scores = heads.map((p) => score(grid, p, {}, true));
 	console.log("Problem one:", sum(scores));
 
-
-	const ratings = heads.map((p) => score(grid, p, {}, false))
+	const ratings = heads.map((p) => score(grid, p, {}, false));
 	console.log("Problem two:", sum(ratings));
 }
 
