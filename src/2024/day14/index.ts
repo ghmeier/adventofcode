@@ -134,7 +134,7 @@ async function problemTwo() {
 				grid.map((r) => r.map((v) => (v ? v : ".")).join("")).join("\n"),
 			);
 			console.log("Problem two:", step + 1);
-			break
+			break;
 		}
 	}
 }

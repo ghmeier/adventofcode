@@ -134,9 +134,9 @@ async function problemTwo() {
 	console.log("Problem two:", total);
 }
 
-console.time('one')
+console.time("one");
 await problemOne();
-console.timeEnd('one')
-console.time('two')
+console.timeEnd("one");
+console.time("two");
 await problemTwo();
-console.timeEnd('two')
+console.timeEnd("two");
