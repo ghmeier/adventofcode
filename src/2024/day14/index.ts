@@ -6,18 +6,18 @@ import {
 	handleLines,
 	pFromS,
 	ps,
+	sum,
 	validCell,
 } from "../../utils";
 
-// biome-ignore lint/correctness/noUnusedVariables: This is ok
 const DATA_PATH = `${import.meta.dir}/data.txt`;
 // biome-ignore lint/correctness/noUnusedVariables: This is ok
 const CALIBRATE_PATH = `${import.meta.dir}/calibrate.txt`;
 
-async function problemOne() {
-	const max = [101, 103];
-	const steps = 100;
-	const robots: { position: Point; velocity: Point }[] = [];
+type Robot = { position: Point; velocity: Point };
+
+async function parse(file: string) {
+	const robots: Robot[] = [];
 
 	await handleLines(DATA_PATH, (l) => {
 		const [position, velocity] = l
@@ -28,54 +28,54 @@ async function problemOne() {
 
 		robots.push({ position, velocity });
 	});
+	return robots;
+}
+
+function move({ position, velocity }: Robot, max: Point) {
+	const next: Point = [
+		(position[0] + velocity[0]) % max[0],
+		(position[1] + velocity[1]) % max[1],
+	];
+	if (next[0] < 0) next[0] = max[0] + next[0];
+	if (next[1] < 0) next[1] = max[1] + next[1];
+	return next;
+}
+
+async function problemOne() {
+	const max: Point = [101, 103];
+	const steps = 100;
+	const robots = await parse(DATA_PATH);
 
 	for (let step = 0; step < steps; step++) {
 		for (const r of robots) {
-			const next: Point = [
-				r.position[0] + r.velocity[0],
-				r.position[1] + r.velocity[1],
-			];
-			if (next[0] >= max[0]) next[0] = next[0] - max[0];
-			if (next[1] >= max[1]) next[1] = next[1] - max[1];
-			if (next[0] < 0) next[0] = max[0] + next[0];
-			if (next[1] < 0) next[1] = max[1] + next[1];
-			r.position = next;
+			r.position = move(r, max);
 		}
 	}
 
-	const counts = { T: { L: 0, R: 0 }, B: { L: 0, R: 0 } };
-	const grid = range(0, max[1]).map(() => range(0, max[0]).map(() => 0));
+	const counts: Record<string, number> = { TL: 0, TR: 0, BL: 0, BR: 0 };
+	const bounds = [Math.floor(max[0] / 2), Math.floor(max[1] / 2)];
 	robots.forEach(({ position }) => {
-		let horizontal: "L" | "R" | null = null;
-		let vertical: "T" | "B" | null = null;
-		if (position[0] < Math.floor(max[0] / 2)) {
-			horizontal = "L";
-		} else if (position[0] > Math.floor(max[0] / 2)) {
-			horizontal = "R";
-		}
-		if (position[1] < Math.floor(max[1] / 2)) {
-			vertical = "T";
-		} else if (position[1] > Math.floor(max[1] / 2)) {
-			vertical = "B";
-		}
+		let key: string | null = null;
+		if (position[1] < bounds[1]) key = "T";
+		else if (position[1] > bounds[1]) key = "B";
 
-		if (horizontal && vertical) counts[vertical][horizontal]++;
+		if (position[0] < bounds[0]) key += "L";
+		else if (position[0] > bounds[0]) key += "R";
 
-		grid[position[1]][position[0]] += 1;
+		if (key && counts[key] !== undefined) counts[key]++;
 	});
 
 	console.log(
 		"Problem one:",
-		counts.T.R * counts.T.L * counts.B.R * counts.B.L,
+		Object.values(counts).reduce((acc, v) => v * acc, 1),
 	);
 }
 
 const D = Object.values(DIRECTIONS);
-type Robot = { position: Point; velocity: Point };
 function group(point: Point, grid: number[][], toVisit: Set<string>) {
 	if (!toVisit.delete(ps(point))) return 0;
 
-	let rest = 0;
+	let rest = 1;
 	for (const p of D) {
 		const next: Point = [point[0] + p[0], point[1] + p[1]];
 		if (!validCell(grid, next) || grid[next[1]][next[0]] === 0) {
@@ -83,9 +83,11 @@ function group(point: Point, grid: number[][], toVisit: Set<string>) {
 		}
 		rest += group(next, grid, toVisit);
 	}
-	return 1 + rest;
+	return rest;
 }
 
+// We'll assume that the robots should be clustered in a group, so
+// search through the robots and see if they're in groups larger than 120.
 function checkGroup(robots: Robot[], grid: number[][]) {
 	const toVisit = new Set(robots.map((r) => ps(r.position)));
 	const iterator = toVisit.values();
@@ -100,36 +102,22 @@ function checkGroup(robots: Robot[], grid: number[][]) {
 }
 
 async function problemTwo() {
-	const max = [101, 103];
+	const max: Point = [101, 103];
 	const steps = 10000;
-	const robots: Robot[] = [];
+	const robots = await parse(DATA_PATH);
 	const grid = range(0, max[1]).map(() => range(0, max[0]).map(() => 0));
-	await handleLines(DATA_PATH, (l) => {
-		const [position, velocity] = l
-			.replace("p=", "")
-			.replace("v=", "")
-			.split(" ")
-			.map((p) => p.split(",").map(Number)) as [Point, Point];
-
+	robots.forEach(({ position }) => {
 		grid[position[1]][position[0]]++;
-		robots.push({ position, velocity });
 	});
 
 	for (let step = 0; step < steps; step++) {
 		for (const r of robots) {
-			const next: Point = [
-				r.position[0] + r.velocity[0],
-				r.position[1] + r.velocity[1],
-			];
-			if (next[0] >= max[0]) next[0] = next[0] - max[0];
-			if (next[1] >= max[1]) next[1] = next[1] - max[1];
-			if (next[0] < 0) next[0] = max[0] + next[0];
-			if (next[1] < 0) next[1] = max[1] + next[1];
 			grid[r.position[1]][r.position[0]]--;
-			r.position = next;
+			r.position = move(r, max);
 			grid[r.position[1]][r.position[0]]++;
 		}
-		if (step > 5000 && checkGroup(robots, grid)) {
+
+		if (checkGroup(robots, grid)) {
 			console.log(
 				grid.map((r) => r.map((v) => (v ? v : ".")).join("")).join("\n"),
 			);
