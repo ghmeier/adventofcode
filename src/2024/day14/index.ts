@@ -1,4 +1,5 @@
 import { range } from "lodash";
+import "node:tty";
 import {
 	DIRECTIONS,
 	type Point,
@@ -9,6 +10,7 @@ import {
 	sum,
 	validCell,
 } from "../../utils";
+import PaintGrid from "../../utils/terminal";
 
 const DATA_PATH = `${import.meta.dir}/data.txt`;
 // biome-ignore lint/correctness/noUnusedVariables: This is ok
@@ -101,30 +103,52 @@ function checkGroup(robots: Robot[], grid: number[][]) {
 	return false;
 }
 
+// 6377
 async function problemTwo() {
 	const max: Point = [101, 103];
 	const steps = 10000;
 	const robots = await parse(DATA_PATH);
+
+	const g = new PaintGrid(max[0], max[1], 0);
+	await g.flush();
 	const grid = range(0, max[1]).map(() => range(0, max[0]).map(() => 0));
-	robots.forEach(({ position }) => {
-		grid[position[1]][position[0]]++;
-	});
+	for (const { position } of robots) {
+		await g.update(
+			position[0],
+			position[1],
+			g.grid[position[1]][position[0]] + 1,
+		);
+		g.grid[position[1]][position[0]]++;
+	}
 
 	for (let step = 0; step < steps; step++) {
 		for (const r of robots) {
+			await g.update(
+				r.position[0],
+				r.position[1],
+				g.grid[r.position[1]][r.position[0]] - 1,
+			);
 			grid[r.position[1]][r.position[0]]--;
 			r.position = move(r, max);
+			await g.update(
+				r.position[0],
+				r.position[1],
+				g.grid[r.position[1]][r.position[0]] + 1,
+			);
 			grid[r.position[1]][r.position[0]]++;
 		}
 
-		if (checkGroup(robots, grid)) {
-			console.log(
-				grid.map((r) => r.map((v) => (v ? v : ".")).join("")).join("\n"),
-			);
-			console.log("Problem two:", step + 1);
+		await g.cursorTo(max[0] + 1, 0);
+		await g.write(`<- Step ${step}`);
+
+		if (step > 5000 && checkGroup(robots, g.grid)) {
+			await g.cursorTo(max[0] + 1, 1);
+			await g.write(`Problem two: ${step + 1}`);
+			await g.close();
 			break;
 		}
 	}
+	console.log("bi?")
 }
 
 await problemOne();
