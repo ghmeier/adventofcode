@@ -7,14 +7,16 @@ export default class PaintGrid<T> {
     maxX: number;
     maxY: number;
     stream: NodeJS.WriteStream
+    debug: boolean
 
-    constructor(width: number, height: number, d: T) {
+    constructor(width: number, height: number, d: T, debug = false) {
         this.width = width;
         this.height = height;
         this.grid = range(0, height).map(() => range(0, width).map(() => d))
         this.stream = process.stderr;
         this.maxY = Math.min(this.stream.rows - 1, this.height);
         this.maxX = Math.min(this.stream.columns, this.width);
+        this.debug = debug;
         this.stream.on('resize', () => {
             this.maxY = Math.min(this.stream.rows - 1, this.height);
             this.maxX = Math.min(this.stream.columns, this.width);
@@ -22,15 +24,21 @@ export default class PaintGrid<T> {
         })
     }
 
-    cursorTo(x: number, y: number) {
+    async cursorTo(x: number, y: number) {
+        if (this.debug) return;
         return new Promise<void>((resolve) => this.stream.cursorTo(x, y, resolve))
     }
 
-    clearLine() {
+    async clearLine() {
+        if (this.debug) return;
         return new Promise<void>((resolve) => this.stream.clearLine(0, resolve))
     }
 
-    write(s: string) {
+    async write(s: string) {
+        if (this.debug) {
+            console.log(s)
+            return;
+        }
         return new Promise<void>((resolve, reject) => this.stream.write(s, (err) => err ? reject(err) : resolve()))
     }
 
@@ -49,7 +57,7 @@ export default class PaintGrid<T> {
 
     async update(x: number, y: number, char: T) {
         this.grid[y][x] = char;
-        if (!this.visible(x, y)) return;
+        if (!this.visible(x, y) || this.debug) return;
         await this.cursorTo(x, y)
         await this.write(`${char}`)
     }
