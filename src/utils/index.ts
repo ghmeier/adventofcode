@@ -116,3 +116,7 @@ export function pairwiseIterate<T>(list: T[], fn: (a: T, b: T) => void) {
 		}
 	}
 }
+
+export function distance([ax, ay]: Point, [bx, by]: Point) {
+	return Math.abs(ax - bx) + Math.abs(ay - by);
+}
